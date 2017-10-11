@@ -1,0 +1,70 @@
+Parameters:
+  EnvironmentSize:
+    Type: String
+    Default: LARGE
+    AllowedValues:
+      - SMALL
+      - MEDIUM
+      - LARGE
+    Description: Select Environment Size (S,M,L)
+  VpcId:
+    Description: Specify the VPC for the instance deployment
+    Type: AWS::EC2::VPC::Id
+  PrivateSubnet:
+    Description: Deploy Instance in a specific Subnet
+    Type: AWS::EC2::Subnet::Id
+  Ec2SecurityGroup:
+    Description: List of Security Groups
+    Type: AWS::EC2::SecurityGroup::Id
+  SSHKey:
+    Description: SSH Key Pair to use
+    Type: AWS::EC2::KeyPair::KeyName
+Mappings:
+  RegionMap:
+    us-east-1:
+      "AmazonLinux" : "ami-80861296" # Ubuntu 16.04 ubuntu-xenial-16.04-amd64-server 2017
+    us-east-2:
+      "AmazonLinux" : "ami-4191b524" # Amazon AMI Apr 2017
+    us-west-1:
+      "AmazonLinux" : "ami-7a85a01a" # Amazon AMI Apr 2017
+    us-west-2:
+      "AmazonLinux" : "ami-4836a428" # Amazon AMI Apr 2017
+    ca-central-1:
+      "AmazonLinux" : "ami-0bd66a6f" # Amazon AMI Apr 2017
+  InstanceSize:
+    SMALL:
+      "EC2" : "t2.small"
+    MEDIUM:
+      "EC2" : "t2.medium"
+    LARGE:
+      "EC2" : "t2.large"
+Resources:
+  EC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AmazonLinux]
+      InstanceType: !FindInMap [InstanceSize, !Ref EnvironmentSize, EC2]
+      KeyName: !Ref SSHKey
+      SubnetId: !Ref PrivateSubnet
+      Tags:
+        -
+          Key: "Name"
+          Value: "web-us-east-1"
+      SecurityGroupIds:
+        - !Ref Ec2SecurityGroup
+      BlockDeviceMappings:
+          - DeviceName: "/dev/sda1"
+            Ebs:
+              DeleteOnTermination: "false"
+              VolumeSize: "100"
+            UserData:
+      Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          yum update -y
+          yum install -y aws-cfn-bootstrap cloud-init aws-cli
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource EC2Instance --region ${AWS::Region} --configsets ec2_setup
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource EC2Instance --region ${AWS::Region}
+Outputs:
+  InstanceID:
+    Description: The Instance ID
+    Value: !Ref EC2

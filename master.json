@@ -1,0 +1,126 @@
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Description":"Provision AWS resources for AWS Audit",
+  "Parameters":{
+    "longClientName":{
+      "Type":"String",
+      "Default":"Softchoice AWS Audit.",
+      "Description": "The long name of the customer"
+    },
+    "shortClientName":{
+      "Type":"String",
+      "Default":"audit",
+      "Description":"The short name of the customer - no spaces, lowercase"
+    },
+    "vpcCIDR":{
+      "Type":"String",
+      "Default":"10.177.0.0/16",
+      "Description":"The CIDR block to be used for the VPC"
+    },
+    "publicSubnetCIDR0":{
+      "Type":"String",
+      "Default":"10.177.0.0/24",
+      "Description":"The CIDR block for the Public Subnet (AZ1)"
+    },
+    "privateSubnetCIDR0":{
+      "Type":"String",
+      "Default":"10.177.1.0/24",
+      "Description":"The CIDR block for the app Subnet (AZ1)"
+    },
+    "dbSubnetCIDR0":{
+      "Type":"String",
+      "Default":"10.177.10.0/24",
+      "Description":"The CIDR block for the DB Subnet (AZ1)"
+    },
+    "publicSubnetCIDR1":{
+      "Type":"String",
+      "Default":"10.177.2.0/24",
+      "Description":"The CIDR block for the Public Subnet (AZ2)"
+    },
+    "privateSubnetCIDR1":{
+      "Type":"String",
+      "Default":"10.177.3.0/24",
+      "Description":"The CIDR block for the app Subnet (AZ2)"
+    },
+    "dbSubnetCIDR1":{
+      "Type":"String",
+      "Default":"10.177.20.0/24",
+      "Description":"The CIDR block for the DB Subnet (AZ2)"
+    }
+  },
+  "Resources":{
+    "vpc":{
+      "Type":"AWS::CloudFormation::Stack",
+      "Properties":{
+        "Parameters":{
+          "shortClientName":{"Ref":"shortClientName"},
+          "longClientName":{"Ref":"longClientName"},
+          "vpcCIDR":{"Ref":"vpcCIDR"},
+          "publicSubnetCIDR0":{"Ref":"publicSubnetCIDR0"},
+          "privateSubnetCIDR0":{"Ref":"privateSubnetCIDR0"},
+          "dbSubnetCIDR0":{"Ref":"dbSubnetCIDR0"},
+          "publicSubnetCIDR1":{"Ref":"publicSubnetCIDR1"},
+          "privateSubnetCIDR1":{"Ref":"privateSubnetCIDR1"},
+          "dbSubnetCIDR1":{"Ref":"dbSubnetCIDR1"}
+        },
+        "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpc.json"
+       }
+     },
+     "elb":{
+       "Type":"AWS::CloudFormation::Stack",
+       "Properties":{
+         "Parameters":{
+           "shortClientName":{"Ref":"shortClientName"},
+           "longClientName":{"Ref":"longClientName"},
+           "publicSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
+           "publicSubnet1Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
+           "elbSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.elbSecurityGroupId"]}
+         },
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/elb.json"
+       }
+     },
+     "s3":{
+       "Type":"AWS::CloudFormation::Stack",
+       "Properties":{
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/s3.json"
+       }
+     },
+     "securitygroup":{
+       "Type":"AWS::CloudFormation::Stack",
+       "Properties":{
+         "Parameters":{
+           "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]}
+         },
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/security.json"
+       }
+     },
+     "vpngateway":{
+       "Type":"AWS::CloudFormation::Stack",
+       "Properties":{
+         "Parameters":{
+           "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]},
+           "publicRouteId":{"Fn::GetAtt":["vpc","Outputs.publicRouteId"]},
+           "privateRoute0Id":{"Fn::GetAtt":["vpc","Outputs.privateRoute0Id"]},
+           "privateRoute1Id":{"Fn::GetAtt":["vpc","Outputs.privateRoute1Id"]},
+          "dbRouteId":{"Fn::GetAtt":["vpc","Outputs.dbRouteId"]}
+         },
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpngw.json"
+       }
+     },
+     "nacl":{
+       "Type":"AWS::CloudFormation::Stack",
+       "Properties":{
+         "Parameters":{
+          "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]},
+           "publicSubnetCIDR0":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
+           "privateSubnetCIDR0":{"Fn::GetAtt":["vpc","Outputs.privateSubnet0Id"]},
+           "dbSubnetCIDR0":{"Fn::GetAtt":["vpc","Outputs.dbSubnet0Id"]},
+           "publicSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
+           "privateSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.privateSubnet1Id"]},
+           "dbSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.dbSubnet1Id"]}
+         },
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/nacl.json"
+       }
+     }
+   }
+ }

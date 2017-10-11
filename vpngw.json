@@ -1,0 +1,41 @@
+  {
+   "AWSTemplateFormatVersion" : "2010-09-09",
+     "Description":"Provision VPNGateway for ICS",
+
+   "Parameters":{
+     "vpcId":{"Type":"String"},
+     "publicRouteId":{"Type":"String"},
+     "privateRoute0Id":{"Type":"String"},
+     "privateRoute1Id":{"Type":"String"},
+     "dbRouteId":{"Type":"String"}
+   },
+   "Resources" : {
+     "VPNGateway" : {
+        "Type" : "AWS::EC2::VPNGateway",
+        "Properties" : {
+           "Type" : "ipsec.1",
+           "Tags" : [ { "Key" : "Name", "Value" : "Production" } ]
+        }
+     },
+     "AttachVpnGateway" : {
+        "Type" : "AWS::EC2::VPCGatewayAttachment",
+         "Properties" : {
+           "VpcId" : { "Ref" : "vpcId" },
+           "VpnGatewayId" : { "Ref" : "VPNGateway" }
+         }
+      },
+      "VPNGatewayRouteProp" : {
+         "DependsOn":"AttachVpnGateway",
+         "Type" : "AWS::EC2::VPNGatewayRoutePropagation",
+         "Properties" : {
+            "RouteTableIds" : [{"Ref" : "publicRouteId"},{"Ref" : "privateRoute0Id"},{"Ref" : "privateRoute1Id"},{"Ref" : "dbRouteId"}],
+            "VpnGatewayId" : {"Ref" : "VPNGateway"}
+       }
+     },
+   },
+   "Outputs":{
+     "VPNGatewayId":{
+       "Value":{"Ref":"VPNGateway"}
+     }
+   }
+ }

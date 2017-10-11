@@ -1,0 +1,48 @@
+{
+   "AWSTemplateFormatVersion" : "2010-09-09",
+
+   "Parameters":{
+     "vpcID": {"Type" : "AWS::EC2::VPC::Id"},
+     "vpnGWId" : {
+         "Default": "vgw-1f05ed76",
+         "Description": "VPN gateway ID ",
+         "Type": "String"
+     },
+     "CustomerPublicIP" : {"Type":"String"},
+     "CustomerPrivateIP" : {"Type":"String"},
+     "CustomerName" : {"Type":"String"}
+   },
+   "Resources" : {
+   "CustomerGateway" : {
+      "Type" : "AWS::EC2::CustomerGateway",
+      "Properties" : {
+         "Type" : "ipsec.1",
+         "BgpAsn" : "65000",
+         "IpAddress" : {"Ref" : "CustomerPublicIP"},
+         "Tags" : [{ "Key" : "Name", "Value" : {"Ref":"CustomerName"}}]
+      }
+   },
+   "VPNConnection" : {
+      "Type" : "AWS::EC2::VPNConnection",
+      "Properties" : {
+         "Type" : "ipsec.1",
+         "StaticRoutesOnly" : "true",
+         "CustomerGatewayId" : {"Ref" : "CustomerGateway"},
+         "VpnGatewayId" : {"Ref" : "vpnGWId"},
+         "Tags" : [{ "Key" : "Name", "Value" : {"Ref":"CustomerName"}}]
+      }
+    },
+    "ConnectionRoute" : {
+       "Type" : "AWS::EC2::VPNConnectionRoute",
+       "Properties" : {
+         "DestinationCidrBlock" : {"Fn::Join":["",["",{"Ref":"CustomerPrivateIP"}]]},
+         "VpnConnectionId" : {"Ref" : "VPNConnection"}
+      }
+    }
+  },
+  "Outputs":{
+    "CustomerGatewayId":{
+      "Value":{"Ref":"CustomerGateway"}
+    }
+  }
+}

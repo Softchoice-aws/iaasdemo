@@ -1,0 +1,41 @@
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Description":"Provision S3 buckets for Audit",
+
+  "Resources":{
+    "cloudtrailBucket":{
+      "Type":"AWS::S3::Bucket",
+      "Properties":{
+        "BucketName":"cloudtrail.softchoiceawsaudit.com",
+        "LifecycleConfiguration":{
+          "Rules":[{
+            "Id":"AgingRule",
+            "Status":"Enabled",
+            "ExpirationInDays":"365"
+          }]
+        }
+      }
+    },
+    "configBucket":{
+      "Type":"AWS::S3::Bucket",
+      "Properties":{
+        "BucketName":"config.softchoiceawsaudit.com",
+        "LifecycleConfiguration":{
+          "Rules":[{
+            "Id":"AgingRule",
+            "Status":"Enabled",
+            "ExpirationInDays":"365"
+          }]
+        }
+      }
+    }
+  },
+  "Outputs":{
+    "cloudtrailBucket":{
+      "Value":{"Ref":"cloudtrailBucket"}
+    },
+    "configBucket":{
+      "Value":{"Ref":"configBucket"}
+    }
+  }
+}
