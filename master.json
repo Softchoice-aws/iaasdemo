@@ -1,15 +1,15 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision AWS resources for AWS Audit",
+  "Description":"Provision AWS resources for Demo Audit",
   "Parameters":{
     "longClientName":{
       "Type":"String",
-      "Default":"Softchoice AWS Audit.",
+      "Default":"Demo Audit.",
       "Description": "The long name of the customer"
     },
     "shortClientName":{
       "Type":"String",
-      "Default":"audit",
+      "Default":"demo",
       "Description":"The short name of the customer - no spaces, lowercase"
     },
     "vpcCIDR":{

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provisioning VPC security groups for ICS",
+  "Description":"Provisioning VPC security groups for Demo",
 
   "Parameters":{
     "vpcId":{"Type":"String"}

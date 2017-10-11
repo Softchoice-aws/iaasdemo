@@ -1,12 +1,12 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision S3 buckets for Audit",
+  "Description":"Provision S3 buckets for demo audit",
 
   "Resources":{
     "cloudtrailBucket":{
       "Type":"AWS::S3::Bucket",
       "Properties":{
-        "BucketName":"cloudtrail.softchoiceawsaudit.com",
+        "BucketName":"cloudtrail.demoeawsaudit.com",
         "LifecycleConfiguration":{
           "Rules":[{
             "Id":"AgingRule",
@@ -19,7 +19,7 @@
     "configBucket":{
       "Type":"AWS::S3::Bucket",
       "Properties":{
-        "BucketName":"config.softchoiceawsaudit.com",
+        "BucketName":"config.demoeawsaudit.com",
         "LifecycleConfiguration":{
           "Rules":[{
             "Id":"AgingRule",

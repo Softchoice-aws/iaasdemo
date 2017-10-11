@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provisioning NACL for ICS",
+  "Description":"Provisioning NACL for Demo",
 
   "Parameters":{
     "vpcId":{"Type":"String"},

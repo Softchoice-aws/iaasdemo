@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision Auto Scaling group for ICS",
+  "Description":"Provision Auto Scaling group for Demo",
 
   "Parameters":{
     "vpcId":{
@@ -30,7 +30,8 @@
   },
   "Mappings":{
     "RegionMap":{
-      "us-east-1":{"64":"ami-11f8d407"}
+      "us-east-1":{"64":"ami-11f8d407"},
+      "us-west-2":{"64":"ami-e689729e"},
     }
   },
   "Resources":{

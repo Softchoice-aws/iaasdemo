@@ -36,7 +36,7 @@ Parameters:
     Description: The Security group List
     Type: AWS::EC2::SecurityGroup::Id
   DBName:
-    Default: icsprod
+    Default: demoaudit
     Description: The database name
     Type: String
     MinLength: '1'

@@ -49,7 +49,7 @@ Resources:
       Tags:
         -
           Key: "Name"
-          Value: "web-us-east-1"
+          Value: "web-us-west-2"
       SecurityGroupIds:
         - !Ref Ec2SecurityGroup
       BlockDeviceMappings:

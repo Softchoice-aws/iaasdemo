@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision ELB for ICS",
-  
+  "Description":"Provision ELB for Demo",
+
   "Parameters":{
     "shortClientName":{"Type":"String"},
     "longClientName":{"Type":"String"},
