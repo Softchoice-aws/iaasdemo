@@ -30,8 +30,8 @@
   },
   "Mappings":{
     "RegionMap":{
-      "us-east-1":{"64":"ami-11f8d407"},
-      "us-west-2":{"64":"ami-e689729e"},
+      "us-east-1":{"64":"ami-80861296"},
+      "us-west-2":{"64":"ami-4836a428"},
     }
   },
   "Resources":{
