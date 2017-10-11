@@ -6,7 +6,7 @@
     "cloudtrailBucket":{
       "Type":"AWS::S3::Bucket",
       "Properties":{
-        "BucketName":"cloudtrail.demoeawsaudit.com",
+        "BucketName":"cloudtrail.softchoicedemoeawsaudit.com",
         "LifecycleConfiguration":{
           "Rules":[{
             "Id":"AgingRule",
@@ -19,7 +19,7 @@
     "configBucket":{
       "Type":"AWS::S3::Bucket",
       "Properties":{
-        "BucketName":"config.demoeawsaudit.com",
+        "BucketName":"config.softchoicedemoeawsaudit.com",
         "LifecycleConfiguration":{
           "Rules":[{
             "Id":"AgingRule",
