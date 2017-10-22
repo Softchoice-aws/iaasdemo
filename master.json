@@ -1,15 +1,15 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision AWS resources for Demo Audit",
+  "Description":"Provision AWS resources for AWS Audit",
   "Parameters":{
     "longClientName":{
       "Type":"String",
-      "Default":"Demo Audit.",
+      "Default":"Softchoice AWS Audit.",
       "Description": "The long name of the customer"
     },
     "shortClientName":{
       "Type":"String",
-      "Default":"demo",
+      "Default":"audit",
       "Description":"The short name of the customer - no spaces, lowercase"
     },
     "vpcCIDR":{
@@ -63,7 +63,7 @@
           "privateSubnetCIDR1":{"Ref":"privateSubnetCIDR1"},
           "dbSubnetCIDR1":{"Ref":"dbSubnetCIDR1"}
         },
-        "TemplateURL":"https://github.com/Softchoice-aws/iaasdemo/blob/master/vpc.json"
+        "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpc.json"
        }
      },
      "elb":{
@@ -76,7 +76,7 @@
            "publicSubnet1Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
            "elbSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.elbSecurityGroupId"]}
          },
-         "TemplateURL":"https://github.com/Softchoice-aws/iaasdemo/blob/master/elb.json"
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/elb.json"
        }
      },
      "securitygroup":{
@@ -85,7 +85,7 @@
          "Parameters":{
            "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]}
          },
-         "TemplateURL":"https://github.com/Softchoice-aws/iaasdemo/blob/master/security.json"
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/security.json"
        }
      },
      "vpngateway":{
@@ -98,7 +98,7 @@
            "privateRoute1Id":{"Fn::GetAtt":["vpc","Outputs.privateRoute1Id"]},
           "dbRouteId":{"Fn::GetAtt":["vpc","Outputs.dbRouteId"]}
          },
-         "TemplateURL":"https://github.com/Softchoice-aws/iaasdemo/blob/master/vpngw.json"
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpngw.json"
        }
      },
      "nacl":{
@@ -113,7 +113,7 @@
            "privateSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.privateSubnet1Id"]},
            "dbSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.dbSubnet1Id"]}
          },
-         "TemplateURL":"https://github.com/Softchoice-aws/iaasdemo/blob/master/nacl.json"
+         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/nacl.json"
        }
      }
    }
