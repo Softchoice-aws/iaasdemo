@@ -63,7 +63,7 @@
           "privateSubnetCIDR1":{"Ref":"privateSubnetCIDR1"},
           "dbSubnetCIDR1":{"Ref":"dbSubnetCIDR1"}
         },
-        "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpc.json"
+        "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/vpc.json"
        }
      },
      "elb":{
@@ -76,7 +76,7 @@
            "publicSubnet1Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
            "elbSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.elbSecurityGroupId"]}
          },
-         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/elb.json"
+         "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/elb.json"
        }
      },
      "securitygroup":{
@@ -85,7 +85,7 @@
          "Parameters":{
            "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]}
          },
-         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/security.json"
+         "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/security.json"
        }
      },
      "vpngateway":{
@@ -98,7 +98,7 @@
            "privateRoute1Id":{"Fn::GetAtt":["vpc","Outputs.privateRoute1Id"]},
           "dbRouteId":{"Fn::GetAtt":["vpc","Outputs.dbRouteId"]}
          },
-         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/vpngw.json"
+         "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/vpngw.json"
        }
      },
      "nacl":{
@@ -113,7 +113,7 @@
            "privateSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.privateSubnet1Id"]},
            "dbSubnetCIDR1":{"Fn::GetAtt":["vpc","Outputs.dbSubnet1Id"]}
          },
-         "TemplateURL":"https://s3-us-west-2.amazonaws.com/awsauditsoftchoice.com/nacl.json"
+         "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/nacl.json"
        }
      }
    }
