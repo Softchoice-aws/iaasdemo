@@ -4,7 +4,7 @@
   "Parameters":{
     "longClientName":{
       "Type":"String",
-      "Default":"Softchoice AWS Audit.",
+      "Default":"Softchoice AWS Audit with Jenkins",
       "Description": "The long name of the customer"
     },
     "shortClientName":{
