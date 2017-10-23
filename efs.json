@@ -1,0 +1,42 @@
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+  "Description":"Provision EFS resources for Launch 2017",
+
+  "Parameters":{
+    "publicSubnet0Id":{"Type":"String"},
+    "publicSubnet1Id":{"Type":"String"},
+    "efsSecurityGroupId":{"Type":"String"}
+  },
+  "Resources":{
+    "webServerFileSystem":{
+      "Type":"AWS::EFS::FileSystem",
+      "Properties":{
+        "FileSystemTags":[
+          {"Key":"Name","Value":"webserver-filesytem"}
+        ]
+      }
+    },
+    "webMountPoint0":{
+      "Type":"AWS::EFS::MountTarget",
+      "Properties":{
+        "FileSystemId":{"Ref":"webServerFileSystem"},
+        "SubnetId":{"Ref":"publicSubnet0Id"},
+        "SecurityGroups":[{"Ref":"efsSecurityGroupId"}]
+      }
+    },
+    "webMountPoint1":{
+      "Type":"AWS::EFS::MountTarget",
+      "Properties":{
+        "FileSystemId":{"Ref":"webServerFileSystem"},
+        "SubnetId":{"Ref":"publicSubnet1Id"},
+        "SecurityGroups":[{"Ref":"efsSecurityGroupId"}]
+      }
+    }
+  },
+
+  "Outputs":{
+    "webServerFileSystem":{"Value":{"Ref":"webServerFileSystem"}},
+    "webMountPoint0":{"Value":{"Ref":"webMountPoint0"}},
+    "webMountPoint1":{"Value":{"Ref":"webMountPoint1"}},
+  }
+}

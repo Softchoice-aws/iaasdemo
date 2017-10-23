@@ -60,6 +60,24 @@
         ]
       }
     },
+    "efsSecurityGroup": {
+      "Type":"AWS::EC2::SecurityGroup",
+      "Properties":{
+        "GroupDescription":"Default security group for EFS mount target",
+        "VpcId":{"Ref":"vpcId"},
+        "SecurityGroupIngress":[
+          {
+            "IpProtocol":"tcp",
+            "FromPort":"2049",
+            "ToPort":"2049",
+            "CidrIp":"0.0.0.0/0"
+          }
+        ],
+        "Tags":[
+          {"Key":"Name","Value":"efs-securityGroup"},
+        ],
+      }
+    },
     "appSecurityGroup":{
       "Type":"AWS::EC2::SecurityGroup",
       "Properties":{
@@ -136,6 +154,9 @@
     },
     "elbSecurityGroupId":{
       "Value":{"Ref":"elbSecurityGroup"}
+    },
+    "efsSecurityGroupId":{
+      "Value":{"Ref":"efsSecurityGroup"}
     },
     "dbSecurityGroupId":{
       "Value":{"Ref":"dbSecurityGroup"}
