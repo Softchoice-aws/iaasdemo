@@ -48,15 +48,15 @@
       "Description":"The CIDR block for the DB Subnet (AZ2)"
     }
   },
-  "webKey":{
-    "Type":"AWS::EC2::KeyPair::KeyName",
-    "Default":"testing",
-    "Description": "Key pair"
+    "webKey":{
+      "Type":"String",
+      "Default":"testing",
+      "Description": "Key pair"
   },
-  "webInstanceType":{
-    "Type":"String",
-    "Default":"t2.small",
-    "AllowedValues":["t2.micro","t2.small"]
+    "webInstanceType":{
+      "Type":"String",
+      "Default":"t2.small",
+      "AllowedValues":["t2.micro","t2.small"]
   },
   "Resources":{
     "vpc":{
