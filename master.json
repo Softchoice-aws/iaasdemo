@@ -46,18 +46,17 @@
       "Type":"String",
       "Default":"10.177.20.0/24",
       "Description":"The CIDR block for the DB Subnet (AZ2)"
-    }
-  },
+    },
     "webKey":{
       "Type":"String",
       "Default":"testing",
       "Description": "Key pair"
-  },
+    },
     "webInstanceType":{
       "Type":"String",
-      "Default":"t2.small",
-      "AllowedValues":["t2.micro","t2.small"]
-  },
+      "Default":"t2.small"
+    }
+},
   "Resources":{
     "vpc":{
       "Type":"AWS::CloudFormation::Stack",
@@ -84,32 +83,19 @@
            "longClientName":{"Ref":"longClientName"},
            "publicSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
            "publicSubnet1Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
-           "elbSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.elbSecurityGroupId"]}
+           "elbSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.elbSecurityGroupId"]},
+           "vpcId":{"Fn::GetAtt":["vpc","Outputs.vpcId"]}
          },
          "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/elb.json"
-       }
-     },
-     "efs":{
-       "Type":"AWS::CloudFormation::Stack",
-       "Properties":{
-         "Parameters":{
-           "publicSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
-           "publicSubnet1Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet1Id"]},
-           "efsSecurityGroupId":{"Fn::GetAtt":["security","Outputs.efsSecurityGroupId"]}
-         },
-         "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/efs.json"
        }
      },
      "web":{
        "Type":"AWS::CloudFormation::Stack",
        "Properties":{
          "Parameters":{
-           "wwwFileSystem":{"Fn::GetAtt":["efs","Outputs.webServerFileSystem"]},
-           "mountPointwww":{"Fn::GetAtt":["efs","Outputs.webMountPoint0"]},
            "webInstanceType":{"Ref":"webInstanceType"},
            "webKey":{"Ref":"webKey"},
-           "webserverSecurityGroupId":{"Fn::GetAtt":["security","Outputs.webserverSecurityGroupId"]},
-           "webServerInstanceProfileId":{"Fn::GetAtt":["iam","Outputs.webServerInstanceProfileId"]},
+           "webserverSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.webSecurityGroupId"]},
            "publicELBId":{"Fn::GetAtt":["elb","Outputs.publicELBId"]},
            "publicSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
            "elbTargetId":{"Fn::GetAtt":["elb","Outputs.elbTargetId"]}
@@ -164,5 +150,5 @@
          "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/nacl.json"
        }
      }
-   }
- }
+    }
+  }

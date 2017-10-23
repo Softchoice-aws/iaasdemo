@@ -7,37 +7,57 @@
     "longClientName":{"Type":"String"},
     "publicSubnet0Id":{"Type":"String"},
     "publicSubnet1Id":{"Type":"String"},
-    "elbSecurityGroupId":{"Type":"String"}
+    "elbSecurityGroupId":{"Type":"String"},
+    "vpcId":{"Type": "String"}
   },
   "Resources":{
-    "publicLoadBalancer":{
-      "Type":"AWS::ElasticLoadBalancing::LoadBalancer",
+    "publicELB":{
+      "Type":"AWS::ElasticLoadBalancingV2::LoadBalancer",
       "Properties":{
-        "CrossZone":true,
-        "HealthCheck":{
-          "HealthyThreshold":"3",
-          "UnhealthyThreshold":"3",
-          "Interval":"10",
-          "Timeout":"5",
-          "Target":"TCP:80"
-        },
-        "Listeners":[
-          {
-            "InstancePort":"80",
-            "InstanceProtocol":"HTTP",
-            "LoadBalancerPort":"80",
-            "Protocol":"HTTP"
-          }
-        ],
-        "Subnets":[{"Ref":"publicSubnet0Id"},{"Ref":"publicSubnet1Id"}],
         "SecurityGroups":[{"Ref":"elbSecurityGroupId"}],
+        "Subnets":[{"Ref":"publicSubnet0Id"},{"Ref":"publicSubnet1Id"}],
         "Tags":[
           {"Key":"Name","Value":"elb-public"}
         ]
       }
+    },
+    "publicListener":{
+      "Type":"AWS::ElasticLoadBalancingV2::Listener",
+      "Properties":{
+        "DefaultActions":[{
+          "Type":"forward",
+          "TargetGroupArn":{"Ref":"elbTarget"}
+        }],
+        "LoadBalancerArn":{"Ref":"publicELB"},
+        "Port":"80",
+        "Protocol":"HTTP"
+      }
+    },
+    "elbTarget":{
+      "Type":"AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties":{
+        "HealthCheckIntervalSeconds":"10",
+        "HealthCheckPath":"/index.html",
+        "HealthCheckPort":"80",
+        "HealthCheckProtocol":"HTTP",
+        "HealthCheckTimeoutSeconds":"5",
+        "HealthyThresholdCount":"3",
+        "Matcher":{"HttpCode":"200"},
+        "Port":"80",
+        "Protocol":"HTTP",
+        "Tags":[
+          {"Key":"Name","Value":"elb-public-target-group"}
+        ],
+        "UnhealthyThresholdCount":"3",
+        "VpcId":{"Ref":"vpcId"}
+      }
     }
   },
   "Outputs":{
-    "elbName":{"Value":{"Ref":"publicLoadBalancer"}}
+    "publicELBId":{"Value":{"Ref":"publicELB"}},
+    "elbListenerId":{"Value":{"Ref":"publicListener"}},
+    "elbTargetId":{"Value":{"Ref":"elbTarget"}},
+    "elbCanonical":{"Value":{"Fn::GetAtt":["publicELB","CanonicalHostedZoneID"]}},
+    "elbName":{"Value":{"Fn::GetAtt":["publicELB","DNSName"]}}
   }
 }
