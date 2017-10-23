@@ -16,7 +16,7 @@
             "IpProtocol":"tcp",
             "FromPort":"22",
             "ToPort":"22",
-            "CidrIp":"100.0.0.0/24"
+            "CidrIp":"100.100.0.0/24"
           }
         ],
         "Tags":[
