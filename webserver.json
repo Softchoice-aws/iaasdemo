@@ -14,7 +14,7 @@
     "webLaunch":{
       "Type":"AWS::AutoScaling::LaunchConfiguration",
       "Properties":{
-        "AssociatePublicIpAddress":true,
+        "AssociatePublicIpAddress":false,
         "ImageId":"ami-02eada62",
         "InstanceType":{"Ref":"webInstanceType"},
         "KeyName":{"Ref":"webKey"},
@@ -52,7 +52,7 @@
         "LaunchConfigurationName":{"Ref":"webLaunch"},
         "HealthCheckGracePeriod":"300",
         "MaxSize":"2",
-        "MinSize":"1",
+        "MinSize":"2",
         "Tags":[
           {"Key":"Name","Value":"webserver-asg","PropagateAtLaunch":true}
         ],
