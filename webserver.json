@@ -7,7 +7,7 @@
     "webKey":{"Type":"String"},
     "webserverSecurityGroupId":{"Type":"String"},
     "publicELBId":{"Type":"String"},
-    "publicSubnet0Id":{"Type":"String"},
+    "privateSubnet0Id":{"Type":"String"},
     "elbTargetId":{"Type":"String"}
   },
   "Resources":{
@@ -57,7 +57,7 @@
           {"Key":"Name","Value":"webserver-asg","PropagateAtLaunch":true}
         ],
         "TargetGroupARNs":[{"Ref":"elbTargetId"}],
-        "VPCZoneIdentifier":[{"Ref":"publicSubnet0Id"}]
+        "VPCZoneIdentifier":[{"Ref":"privateSubnet0Id"}]
       }
     }
   },

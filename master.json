@@ -97,7 +97,7 @@
            "webKey":{"Ref":"webKey"},
            "webserverSecurityGroupId":{"Fn::GetAtt":["securitygroup","Outputs.webSecurityGroupId"]},
            "publicELBId":{"Fn::GetAtt":["elb","Outputs.publicELBId"]},
-           "publicSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.publicSubnet0Id"]},
+           "privateSubnet0Id":{"Fn::GetAtt":["vpc","Outputs.privateSubnet0Id"]},
            "elbTargetId":{"Fn::GetAtt":["elb","Outputs.elbTargetId"]}
          },
          "TemplateURL":"https://s3-us-west-1.amazonaws.com/jenkinssoftchoice.com/webserver.json"
