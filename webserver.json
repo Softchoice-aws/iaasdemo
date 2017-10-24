@@ -48,12 +48,12 @@
     "webAutoScaling":{
       "Type":"AWS::AutoScaling::AutoScalingGroup",
       "Properties":{
-        "DesiredCapacity":"1",
+        "DesiredCapacity":"2",
         "HealthCheckType":"ELB",
         "LaunchConfigurationName":{"Ref":"webLaunch"},
         "HealthCheckGracePeriod":"300",
-        "MaxSize":"1",
-        "MinSize":"1",
+        "MaxSize":"2",
+        "MinSize":"2",
         "Tags":[
           {"Key":"Name","Value":"webserver-asg","PropagateAtLaunch":true}
         ],
