@@ -29,7 +29,7 @@
            "sudo service httpd start\n",
            "sudo chkconfig httpd on\n",
            "cd /var/www/html/\n",
-           "sudo wget https://softchoice-aws.github.io/iaasdemo/\n",
+           "sudo wget https://softchoice-aws.github.io/iaasdemo/index.html\n",
 
            "/opt/aws/bin/cfn-init -v ",
            "         --stack ",{"Ref":"AWS::StackName"},
