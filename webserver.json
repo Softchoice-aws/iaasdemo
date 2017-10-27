@@ -30,6 +30,7 @@
            "sudo chkconfig httpd on\n",
            "cd /var/www/html/\n",
            "sudo wget https://softchoice-aws.github.io/iaasdemo/index.html\n",
+           "curl http://169.254.169.254/latest/meta-data/local-hostname\n"
 
            "/opt/aws/bin/cfn-init -v ",
            "         --stack ",{"Ref":"AWS::StackName"},
@@ -48,12 +49,12 @@
     "webAutoScaling":{
       "Type":"AWS::AutoScaling::AutoScalingGroup",
       "Properties":{
-        "DesiredCapacity":"2",
+        "DesiredCapacity":"3",
         "HealthCheckType":"ELB",
         "LaunchConfigurationName":{"Ref":"webLaunch"},
         "HealthCheckGracePeriod":"300",
-        "MaxSize":"2",
-        "MinSize":"2",
+        "MaxSize":"3",
+        "MinSize":"3",
         "Tags":[
           {"Key":"Name","Value":"webserver-asg","PropagateAtLaunch":true}
         ],
