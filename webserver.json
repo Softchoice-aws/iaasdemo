@@ -30,7 +30,7 @@
            "sudo chkconfig httpd on\n",
            "cd /var/www/html/\n",
            "sudo wget https://softchoice-aws.github.io/iaasdemo/index.html\n",
-           "curl http://169.254.169.254/latest/meta-data/local-ipv4\n"
+           "sudo curl http://169.254.169.254/latest/meta-data/local-ipv4\n",
 
            "/opt/aws/bin/cfn-init -v ",
            "         --stack ",{"Ref":"AWS::StackName"},
