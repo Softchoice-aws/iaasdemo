@@ -52,7 +52,7 @@
         "HealthCheckType":"ELB",
         "LaunchConfigurationName":{"Ref":"webLaunch"},
         "HealthCheckGracePeriod":"300",
-        "MaxSize":"1",
+        "MaxSize":"3",
         "MinSize":"1",
         "Tags":[
           {"Key":"Name","Value":"webserver-asg","PropagateAtLaunch":true}
