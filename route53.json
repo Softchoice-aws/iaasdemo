@@ -8,7 +8,7 @@
   },
 
   "Resources":{
-    "babymonkey":{
+    "githubpage":{
       "Type":"AWS::Route53::RecordSet",
       "Properties":{
         "AliasTarget":{
