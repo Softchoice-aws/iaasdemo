@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion":"2010-09-09",
-  "Description":"Provision AWS resources for AWS Audit through Jenkins build",
+  "Description":"Provision AWS resources for AWS Audit-2017 through Jenkins build",
   "Parameters":{
     "longClientName":{
       "Type":"String",
