@@ -26,10 +26,16 @@
 
            "sudo yum update -y\n",
            "sudo yum install -y httpd24 php70 mysql56-server php70-mysqlnd\n",
+           "sudo yum install ruby\n",
+           "sudo yum install wget\n",
            "sudo service httpd start\n",
            "sudo chkconfig httpd on\n",
            "cd /var/www/html/\n",
            "sudo wget https://softchoice-aws.github.io/iaasdemo/index.html\n",
+           "cd /home/ec2-user\n",
+           "wget https://aws-codedeploy-us-west-1.s3.amazonaws.com/latest/install\n",
+           "chmod +x ./install\n",
+           "sudo ./install auto\n",
 
            "/opt/aws/bin/cfn-init -v ",
            "         --stack ",{"Ref":"AWS::StackName"},
