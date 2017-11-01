@@ -19,7 +19,7 @@
         "ImageId":"ami-02eada62",
         "InstanceType":{"Ref":"webInstanceType"},
         "KeyName":{"Ref":"webKey"},
-        "IamInstanceProfile":"arn:aws:iam::923882985467:role/CodeDeployInstanceRole",
+        "IamInstanceProfile":"arn:aws:iam::923882985467:instance-profile/JenkinsS3",
         "SecurityGroups":[{"Ref":"webserverSecurityGroupId"}],
         "UserData":{"Fn::Base64":{"Fn::Join":["",[
            "#!/bin/bash -xe\n",
