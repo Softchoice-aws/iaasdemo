@@ -5,11 +5,10 @@ files:
     destination: /var/www/html/
 hooks:
   BeforeInstall:
-    - location: scripts/delete-old-index.sh
+    - location: scripts/webserver-stop.sh
       timeout: 300
       runas: root
-  ApplicationStop:
-    - location: scripts/webserver-stop.sh
+    - location: scripts/delete-old-index.sh
       timeout: 300
       runas: root
   AfterInstall:
